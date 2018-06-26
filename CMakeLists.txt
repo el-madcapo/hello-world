@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(helloworld)
+# The version number.
+set (helloworld_VERSION_MAJOR 1)
+set (helloworld_VERSION_MINOR 0)
+
+# The following folder will be included
+include_directories("${PROJECT_SOURCE_DIR}")
+
+# Set the output folder where your program will be created
+#set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+
+add_executable(${PROJECT_NAME} main.cpp)
+
+set_target_properties( helloworld PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
+)
+
+# add the install targets
+install (TARGETS ${PROJECT_NAME} DESTINATION bin)
+
+#set(CPACK_GENERATOR "DEB")
+#set(CPACK_PACKAGE_VENDOR "testCompamy")
+#set(CPACK_PACKAGE_FILE_NAME "helloworld")
+#set(CPACK_PACKAGE_VERSION ${MAJOR}.${MINOR}.${PATCH})
+#set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+#set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+#set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+#set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+#set(CPACK_PACKAGE_DESCRIPTION "Some Description")
+#set(CPACK_PACKAGE_CONTACT "support@company.com")
+
+#include(CPack)
+
+INCLUDE(InstallRequiredSystemLibraries)
+
+set(CPACK_GENERATOR "DEB")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "1st homework")
+SET(CPACK_PACKAGE_VENDOR "Me, myself, and I")
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "me")
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
+
+INCLUDE(CPack)
+
+
+
