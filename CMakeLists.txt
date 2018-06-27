@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.4)
 
 project(helloworld)
 # The version number.
-set (helloworld_VERSION_MAJOR 1)
-set (helloworld_VERSION_MINOR 0)
+set (helloworld_VERSION_MAJOR 0)
+set (helloworld_VERSION_MINOR 1)
 
 
 # The following folder will be included
