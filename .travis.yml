@@ -1,6 +1,9 @@
 language: cpp
 before_script:
 - sudo apt-get install libboost-test-dev -y
+ - export _PROJECT_NAME=$(cat .project_name)
+ - export _PROJECT_VERSION=$(cat .version)
+ - export _PROJECT_DEB_NAME="$_PROJECT_NAME-$_PROJECT_VERSION.$TRAVIS_BUILD_NUMBER-Linux.deb"
 script:
 - cmake .
 - cmake --build .
@@ -10,5 +13,5 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -testmeplease:$BINTRAY_API_KEY "https://api.bintray.com/hello_world/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - curl -T _PROJECT_DEB_NAME-Linux.deb -testmeplease:$BINTRAY_API_KEY "https://api.bintray.com/hello_world/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
 
