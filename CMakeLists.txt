@@ -7,7 +7,7 @@ set (helloworld_VERSION_MINOR 2)
 
 
 # The following folder will be included
-include_directories("${PROJECT_SOURCE_DIR}" .)
+#include_directories("${PROJECT_SOURCE_DIR}" .)
 
 
 #set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/src)
