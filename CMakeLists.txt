@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.4)
 project(helloworld)
 # The version number.
 set (helloworld_VERSION_MAJOR 0)
-set (helloworld_VERSION_MINOR 2)
+set (helloworld_VERSION_MINOR 4)
 
 
 # The following folder will be included
@@ -34,7 +34,7 @@ SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yury")
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "$ENV{TRAVIS_BUILD_NUMBER}")
-set(CPACK_PACKAGE_FILE_NAME "helloworld")
+set(CPACK_PACKAGE_FILE_NAME "helloworld.CPACK_PACKAGE_VERSION_MAJOR.CPACK_PACKAGE_VERSION_MINOR")
 
 INCLUDE(CPack)
 
