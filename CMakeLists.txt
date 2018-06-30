@@ -1,40 +1,51 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.2)
 
-project(helloworld)
-# The version number.
 set (PROJECT_VERSION_MAJOR 0)
-set (PROJECT_VERSION_MINOR 4) 
+set (PROJECT_VERSION_MINOR 5)
 
+project(helloworld VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.$ENV{TRAVIS_BUILD_NUMBER})
 
-# The following folder will be included
-#include_directories("${PROJECT_SOURCE_DIR}" .)
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
+add_executable(helloworld_cli main.cpp)
 
-#set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
-#set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+add_library(helloworld lib.cpp)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(test_version test_version.cpp)
 
-set_target_properties( helloworld PROPERTIES
+set_target_properties(helloworld_cli helloworld test_version PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
     COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
 )
 
-# add the install targets
-install (TARGETS ${PROJECT_NAME} DESTINATION bin)
+set_target_properties(test_version PROPERTIES
+    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+)
 
-INCLUDE(InstallRequiredSystemLibraries)
+target_link_libraries(helloworld_cli
+    helloworld
+)
 
-set(CPACK_GENERATOR "DEB")
-SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Yury")
+target_link_libraries(test_version
+    ${Boost_LIBRARIES}
+    helloworld
+)
+
+install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
+
+set(CPACK_GENERATOR DEB)
+
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "$ENV{TRAVIS_BUILD_NUMBER}")
-#set(CPACK_PACKAGE_FILE_NAME "helloworld.${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}-Linux")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
-INCLUDE(CPack)
+set(CPACK_PACKAGE_CONTACT dontevenwrite@example.com)
 
+include(CPack)
 
+enable_testing()
+
+add_test(test_version test_version)
 
